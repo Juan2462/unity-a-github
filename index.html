@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111713">
+  <meta name="description" content="Aprende paso a paso a subir tu proyecto de Unity a GitHub con GitHub Desktop. Guía para principiantes con ilustraciones y consejos claros.">
+  <title>Sube tu proyecto de Unity a GitHub | Guía fácil</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101511;
+      --panel: #19221c;
+      --panel-soft: #202b23;
+      --ink: #f3f5ed;
+      --muted: #a7b3a9;
+      --lime: #c9f36a;
+      --orange: #ff9a68;
+      --line: #354239;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    img, svg { display: block; max-width: 100%; }
+    .shell { width: min(1120px, calc(100% - 44px)); margin: 0 auto; }
+    .announcement { padding: 9px 16px; background: var(--lime); color: #172013; text-align: center; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    header { position: sticky; z-index: 5; top: 0; border-bottom: 1px solid rgb(255 255 255 / 8%); background: rgb(16 21 17 / 92%); backdrop-filter: blur(14px); }
+    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 14px; font-weight: 950; letter-spacing: -.05em; white-space: nowrap; }
+    .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: var(--lime); color: #172013; font-size: 19px; }
+    .brand em { color: var(--lime); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 22px; }
+    .nav-links a { color: #c2ccc3; text-decoration: none; font-size: 11px; font-weight: 750; }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-links .nav-cta { padding: 10px 14px; border-radius: 999px; background: var(--lime); color: #172013; }
+    .hero { padding: 68px 0 42px; }
+    .hero-grid { display: grid; grid-template-columns: .95fr 1.05fr; align-items: center; gap: 48px; }
+    .eyebrow, .kicker { color: var(--lime); font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid #41513c; border-radius: 999px; background: #1a241b; }
+    .eyebrow span { color: var(--orange); }
+    h1 { max-width: 590px; margin: 21px 0 17px; font-size: clamp(52px, 7.3vw, 84px); line-height: .92; letter-spacing: -.085em; }
+    h1 .accent { color: var(--lime); }
+    .hero-copy { max-width: 480px; color: #bdc7be; font-size: 14px; line-height: 1.8; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 23px; }
+    .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 17px; border: 1px solid transparent; border-radius: 999px; background: var(--lime); color: #172013; text-decoration: none; font-size: 11px; font-weight: 900; transition: transform .2s, background .2s; }
+    .button:hover { background: #dcff91; transform: translateY(-2px); }
+    .button.ghost { border-color: #46534a; background: transparent; color: var(--ink); }
+    .button.ghost:hover { border-color: var(--lime); color: var(--lime); }
+    .hero-note { margin-top: 14px; color: #8b988e; font-size: 10px; }
+    .hero-art { position: relative; overflow: hidden; padding: 20px; border: 1px solid #43534a; border-radius: 24px; background: radial-gradient(circle at 75% 15%, #334d36, transparent 48%), #1a241c; }
+    .hero-art svg { width: 100%; height: auto; }
+    .art-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 5px 2px; color: #d3ddd3; font-size: 10px; }
+    .art-caption strong { color: var(--lime); }
+    .quick-facts { display: grid; grid-template-columns: repeat(3, 1fr); overflow: hidden; margin-top: 10px; border: 1px solid var(--line); border-radius: 15px; background: var(--line); gap: 1px; }
+    .fact { padding: 16px 19px; background: var(--panel); }
+    .fact strong { display: block; margin-bottom: 3px; color: var(--lime); font-size: 16px; }
+    .fact span { color: var(--muted); font-size: 10px; }
+    .section { padding: 74px 0; }
+    .section.alt { border-top: 1px solid rgb(255 255 255 / 6%); border-bottom: 1px solid rgb(255 255 255 / 6%); background: #151c17; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 27px; }
+    h2 { margin: 9px 0 0; font-size: clamp(32px, 4.3vw, 51px); line-height: 1.02; letter-spacing: -.07em; }
+    .section-description { max-width: 470px; margin: 11px 0 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .step-card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    .step-visual { min-height: 205px; display: grid; place-items: center; padding: 17px; background: linear-gradient(145deg, #25352a, #19231c); }
+    .step-visual svg { width: min(100%, 440px); max-height: 205px; }
+    .step-copy { padding: 19px 21px 22px; }
+    .step-top { display: flex; align-items: center; gap: 10px; }
+    .step-number { width: 30px; height: 30px; display: grid; flex: 0 0 auto; place-items: center; border-radius: 10px; background: var(--lime); color: #172013; font-size: 11px; font-weight: 950; }
+    .step-copy h3 { margin: 0; font-size: 16px; letter-spacing: -.035em; }
+    .step-copy p { margin: 11px 0 0; color: var(--muted); font-size: 11px; line-height: 1.75; }
+    .step-copy strong { color: #e4ebdf; }
+    .step-copy code, .check code { color: var(--lime); font-family: var(--mono); font-size: .92em; }
+    .tip { margin-top: 16px; padding: 14px 16px; border-left: 3px solid var(--orange); border-radius: 0 11px 11px 0; background: #241f1b; color: #ddd2c6; font-size: 10px; line-height: 1.75; }
+    .tip strong { color: #fff0df; }
+    .checklist { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .check { padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: var(--panel); }
+    .check span { display: block; margin-bottom: 9px; color: var(--lime); font-size: 18px; }
+    .check h3 { margin: 0 0 7px; font-size: 13px; }
+    .check p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.75; }
+    .callout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-top: 14px; }
+    .callout-grid article { padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: #1a231d; }
+    .callout-grid h3 { margin: 0 0 7px; color: var(--lime); font-size: 13px; }
+    .callout-grid p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.75; }
+    .callout-grid a { color: var(--lime); }
+    .final-cta { display: flex; align-items: center; justify-content: space-between; gap: 22px; padding: 26px 29px; border-radius: 19px; background: var(--lime); color: #172013; }
+    .final-cta h2 { margin: 0; font-size: clamp(24px, 3.4vw, 36px); }
+    .final-cta p { max-width: 600px; margin: 8px 0 0; color: #445132; font-size: 10px; line-height: 1.7; }
+    .final-cta .button { flex: 0 0 auto; background: #171d15; color: white; }
+    footer { padding: 23px 0 28px; border-top: 1px solid var(--line); }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    footer p { max-width: 680px; margin: 0; color: #8d9a90; font-size: 9px; line-height: 1.7; text-align: right; }
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 30px, 490px); }
+      .nav { min-height: 60px; }
+      .nav-links { gap: 10px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .nav-links .nav-cta { padding: 9px 11px; font-size: 9px; }
+      .hero { padding: 42px 0 35px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      h1 { font-size: clamp(51px, 14vw, 70px); }
+      .quick-facts { grid-template-columns: 1fr; }
+      .fact { padding: 12px 16px; }
+      .fact strong { display: inline-block; width: 75px; margin: 0; }
+      .section { padding: 57px 0; }
+      .section-heading { display: block; }
+      .steps, .checklist, .callout-grid { grid-template-columns: 1fr; }
+      .step-visual { min-height: 180px; }
+      .step-visual svg { max-height: 175px; }
+      .final-cta { align-items: flex-start; flex-direction: column; padding: 23px; }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+      footer p { text-align: left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">Guía para principiantes · No necesitas saber programar con Git</div>
+  <header>
+    <nav class="nav shell" aria-label="Navegación principal">
+      <a class="brand" href="#" aria-label="Unity a GitHub, inicio"><span class="brand-mark">U</span><span>UNITY <em>→ GITHUB</em></span></a>
+      <div class="nav-links">
+        <a href="#preparar">Antes de empezar</a>
+        <a href="#pasos">Los pasos</a>
+        <a href="#errores">Consejos</a>
+        <a class="nav-cta" href="#pasos">Empezar ↓</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><span>●</span> Tutorial fácil · Unity + GitHub Desktop</div>
+          <h1>Tu proyecto<br>de Unity, <span class="accent">a salvo.</span></h1>
+          <p class="hero-copy">Aprende a guardar una copia de tu proyecto en GitHub paso a paso. Usaremos GitHub Desktop, una aplicación visual y gratuita: no tendrás que escribir comandos.</p>
+          <div class="hero-actions">
+            <a class="button" href="#pasos">Ver los pasos <span aria-hidden="true">↓</span></a>
+            <a class="button ghost" href="#preparar">Preparar mi proyecto</a>
+          </div>
+          <p class="hero-note">Funciona en Windows y macOS · Las ilustraciones muestran ejemplos, no capturas exactas.</p>
+        </div>
+        <div class="hero-art">
+          <svg viewBox="0 0 600 380" role="img" aria-labelledby="hero-title hero-desc">
+            <title id="hero-title">Proyecto de Unity guardado de forma segura en GitHub</title>
+            <desc id="hero-desc">Una carpeta con los archivos importantes de Unity se envía desde el ordenador a un repositorio privado en la nube.</desc>
+            <rect x="28" y="61" width="233" height="242" rx="18" fill="#111713" stroke="#71806f" stroke-width="2"/>
+            <rect x="28" y="61" width="233" height="34" rx="16" fill="#29352d"/>
+            <circle cx="49" cy="78" r="4" fill="#ff8060"/><circle cx="64" cy="78" r="4" fill="#f2c05e"/><circle cx="79" cy="78" r="4" fill="#9aca5f"/>
+            <text x="101" y="82" fill="#e2e8de" font-size="12" font-family="sans-serif">MI PROYECTO UNITY</text>
+            <path d="M56 123h53l13 14h111v116H56z" fill="#27382c" stroke="#9aca5f" stroke-width="2"/>
+            <rect x="73" y="157" width="44" height="43" rx="7" fill="#415b43"/><text x="95" y="184" fill="#c9f36a" text-anchor="middle" font-size="11" font-weight="700" font-family="sans-serif">Assets</text>
+            <rect x="127" y="157" width="44" height="43" rx="7" fill="#334b3a"/><text x="149" y="184" fill="#d2dfd0" text-anchor="middle" font-size="9" font-family="sans-serif">Packages</text>
+            <rect x="181" y="157" width="44" height="43" rx="7" fill="#334b3a"/><text x="203" y="181" fill="#d2dfd0" text-anchor="middle" font-size="8" font-family="sans-serif">Project</text><text x="203" y="192" fill="#d2dfd0" text-anchor="middle" font-size="8" font-family="sans-serif">Settings</text>
+            <text x="73" y="225" fill="#94a594" font-size="10" font-family="sans-serif">Tus escenas, modelos y scripts</text>
+            <path d="M281 177h91" stroke="#c9f36a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M359 164l16 13-16 13" fill="none" stroke="#c9f36a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M432 103c-34 0-58 24-58 54 0 23 14 42 36 50-2 12-10 23-22 31 22-1 40-12 52-28h27c33 0 57-23 57-54s-24-53-57-53z" fill="#263e35" stroke="#9aca5f" stroke-width="2"/>
+            <path d="M448 137c-13 0-23 10-23 23 0 10 6 18 15 21v25c0 8 6 14 14 14s14-6 14-14v-25c9-3 15-11 15-21 0-13-10-23-23-23z" fill="#c9f36a"/>
+            <circle cx="446" cy="157" r="3" fill="#172013"/><circle cx="462" cy="157" r="3" fill="#172013"/>
+            <rect x="184" y="324" width="231" height="30" rx="15" fill="#29352d"/>
+            <text x="299" y="344" fill="#c9f36a" text-anchor="middle" font-size="12" font-weight="700" font-family="sans-serif">GUARDAR → PUBLICAR → ACTUALIZAR</text>
+          </svg>
+          <div class="art-caption"><span><strong>Tu trabajo</strong> queda respaldado en la nube.</span><span>01 / 06</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell quick-facts" aria-label="Resumen de la guía">
+      <div class="fact"><strong>01 · Prepara</strong><span>Elige la carpeta correcta de Unity</span></div>
+      <div class="fact"><strong>02 · Guarda</strong><span>Registra una primera versión</span></div>
+      <div class="fact"><strong>03 · Publica</strong><span>Sube el proyecto a GitHub</span></div>
+    </div>
+
+    <section class="section alt" id="preparar">
+      <div class="shell">
+        <div class="section-heading">
+          <div><div class="kicker">Antes de empezar</div><h2>Un minuto de preparación<br>te ahorra problemas.</h2></div>
+          <p class="section-description">GitHub sirve para guardar y compartir versiones de tu trabajo. Antes de subir nada, comprueba que tienes la carpeta adecuada y que no vas a incluir archivos temporales enormes.</p>
+        </div>
+        <div class="checklist">
+          <article class="check"><span aria-hidden="true">01</span><h3>Encuentra la carpeta raíz</h3><p>Es la carpeta principal del proyecto: dentro suelen estar <code>Assets</code>, <code>Packages</code> y <code>ProjectSettings</code>. No elijas solo la carpeta Assets.</p></article>
+          <article class="check"><span aria-hidden="true">02</span><h3>Guarda y cierra Unity</h3><p>Guarda la escena y los cambios. Cerrar el Editor mientras preparas la primera subida ayuda a evitar archivos en uso.</p></article>
+          <article class="check"><span aria-hidden="true">03</span><h3>Instala GitHub Desktop</h3><p>Descárgalo desde <a href="https://desktop.github.com/" target="_blank" rel="noopener noreferrer">desktop.github.com</a> e inicia sesión con tu cuenta de GitHub. Si aún no tienes cuenta, créala en <a href="https://github.com/" target="_blank" rel="noopener noreferrer">github.com</a>.</p></article>
+        </div>
+        <div class="tip"><strong>Lo importante:</strong> sí subiremos <code>Assets</code>, <code>Packages</code> y <code>ProjectSettings</code>. No subiremos <code>Library</code>, <code>Temp</code> ni <code>Obj</code>: Unity puede volver a generarlas y ocupan mucho espacio.</div>
+      </div>
+    </section>
+
+    <section class="section shell" id="pasos">
+      <div class="section-heading">
+        <div><div class="kicker">Sigue estos seis pasos</div><h2>De tu ordenador<br>a tu repositorio.</h2></div>
+        <p class="section-description">Un repositorio es como una carpeta del proyecto guardada en GitHub, con un historial de cambios. Las pantallas dibujadas aquí son ejemplos; los botones pueden cambiar ligeramente según la versión de GitHub Desktop.</p>
+      </div>
+      <div class="steps">
+        <article class="step-card">
+          <div class="step-visual">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="step1-title step1-desc">
+              <title id="step1-title">Identificar la carpeta principal de un proyecto de Unity</title>
+              <desc id="step1-desc">Una ventana de archivos muestra Assets, Packages y ProjectSettings dentro de la carpeta MiJuego.</desc>
+              <rect x="25" y="17" width="390" height="176" rx="13" fill="#111713" stroke="#71806f" stroke-width="2"/>
+              <rect x="25" y="17" width="390" height="29" rx="12" fill="#29352d"/><circle cx="44" cy="31" r="4" fill="#ff8060"/><text x="62" y="35" fill="#e2e8de" font-size="10" font-family="sans-serif">Explorador · MiJuego</text>
+              <rect x="43" y="56" width="354" height="27" rx="6" fill="#26352b" stroke="#9aca5f"/><text x="57" y="74" fill="#c9f36a" font-size="10" font-weight="700" font-family="sans-serif">📁 MiJuego  ← selecciona esta carpeta</text>
+              <text x="70" y="104" fill="#e2e8de" font-size="10" font-family="sans-serif">📁 Assets</text><text x="70" y="125" fill="#e2e8de" font-size="10" font-family="sans-serif">📁 Packages</text>
+              <text x="70" y="146" fill="#e2e8de" font-size="10" font-family="sans-serif">📁 ProjectSettings</text><text x="70" y="169" fill="#879689" font-size="9" font-family="sans-serif">Esas tres carpetas confirman que estás en la raíz.</text>
+              <path d="M54 99l5 5 9-11" fill="none" stroke="#c9f36a" stroke-width="2"/><path d="M54 120l5 5 9-11" fill="none" stroke="#c9f36a" stroke-width="2"/><path d="M54 141l5 5 9-11" fill="none" stroke="#c9f36a" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="step-copy"><div class="step-top"><span class="step-number">01</span><h3>Localiza la carpeta del proyecto</h3></div><p>Abre el Explorador de archivos (Windows) o Finder (Mac). Busca la carpeta que contiene <strong>Assets</strong>, <strong>Packages</strong> y <strong>ProjectSettings</strong>. Esa carpeta completa es la que vamos a guardar. Si no encuentras alguno de esos nombres, abre el proyecto desde Unity Hub y revisa su ubicación.</p></div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-visual">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="step2-title step2-desc">
+              <title id="step2-title">Añadir el proyecto existente a GitHub Desktop</title>
+              <desc id="step2-desc">En el menú File se selecciona Add Local Repository y luego se elige la carpeta del proyecto.</desc>
+              <rect x="28" y="18" width="384" height="174" rx="13" fill="#111713" stroke="#71806f" stroke-width="2"/>
+              <rect x="28" y="18" width="384" height="29" rx="12" fill="#29352d"/><text x="45" y="36" fill="#e2e8de" font-size="10" font-family="sans-serif">GitHub Desktop</text>
+              <rect x="43" y="56" width="103" height="22" rx="5" fill="#26352b"/><text x="55" y="71" fill="#dbe4d9" font-size="9" font-family="sans-serif">File ▾</text>
+              <rect x="47" y="81" width="184" height="83" rx="7" fill="#202c24" stroke="#526352"/><text x="60" y="101" fill="#e2e8de" font-size="9" font-family="sans-serif">Add Local Repository...</text><rect x="54" y="109" width="170" height="26" rx="4" fill="#3a5238"/><text x="64" y="126" fill="#c9f36a" font-size="9" font-weight="700" font-family="sans-serif">Create a New Repository...</text><text x="60" y="151" fill="#a9b5aa" font-size="8" font-family="sans-serif">Clone Repository...</text>
+              <path d="M248 120h43" stroke="#c9f36a" stroke-width="3" stroke-linecap="round"/><path d="M283 111l11 9-11 9" fill="none" stroke="#c9f36a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="302" y="74" width="91" height="83" rx="9" fill="#26352b" stroke="#71806f"/><path d="M320 99h25l7 8h24v32h-56z" fill="#9aca5f"/><text x="347" y="151" fill="#dce8da" text-anchor="middle" font-size="8" font-family="sans-serif">MiJuego</text>
+            </svg>
+          </div>
+          <div class="step-copy"><div class="step-top"><span class="step-number">02</span><h3>Crea el repositorio local</h3></div><p>Abre GitHub Desktop y ve a <strong>File → Add Local Repository…</strong>. Elige la carpeta raíz de tu proyecto. Si te avisa que no es un repositorio, selecciona la opción para <strong>crear uno allí</strong>. Si ese aviso no aparece, usa <strong>File → New repository…</strong> y confirma que la ubicación sea la carpeta existente de Unity, no una carpeta nueva dentro de ella.</p></div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-visual">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="step3-title step3-desc">
+              <title id="step3-title">Configurar el repositorio con una plantilla Unity para ignorar archivos temporales</title>
+              <desc id="step3-desc">La ventana de GitHub Desktop muestra el nombre MiJuego y la opción Git ignore con la plantilla Unity seleccionada.</desc>
+              <rect x="27" y="17" width="386" height="176" rx="13" fill="#111713" stroke="#71806f" stroke-width="2"/>
+              <rect x="27" y="17" width="386" height="29" rx="12" fill="#29352d"/><text x="45" y="35" fill="#e2e8de" font-size="10" font-family="sans-serif">Create a New Repository</text>
+              <text x="48" y="69" fill="#9eaa9f" font-size="8" font-family="sans-serif">Name</text><rect x="48" y="74" width="344" height="23" rx="5" fill="#202c24" stroke="#536356"/><text x="59" y="90" fill="#e2e8de" font-size="9" font-family="sans-serif">MiJuego</text>
+              <text x="48" y="116" fill="#9eaa9f" font-size="8" font-family="sans-serif">Local path</text><rect x="48" y="121" width="344" height="23" rx="5" fill="#202c24" stroke="#536356"/><text x="59" y="137" fill="#d0dbcf" font-size="8" font-family="sans-serif">C:\Users\TuNombre\Unity\MiJuego</text>
+              <text x="48" y="162" fill="#9eaa9f" font-size="8" font-family="sans-serif">Git ignore</text><rect x="122" y="148" width="270" height="23" rx="5" fill="#26352b" stroke="#9aca5f"/><text x="134" y="164" fill="#c9f36a" font-size="9" font-weight="700" font-family="sans-serif">Unity  ✓</text>
+              <text x="48" y="185" fill="#879689" font-size="8" font-family="sans-serif">La plantilla excluye Library, Temp y otros archivos generados.</text>
+            </svg>
+          </div>
+          <div class="step-copy"><div class="step-top"><span class="step-number">03</span><h3>Elige la plantilla Unity</h3></div><p>Pon un nombre para el repositorio y comprueba la ruta. En <strong>Git ignore</strong>, selecciona <strong>Unity</strong> si aparece. Esta plantilla evita subir carpetas temporales grandes. Si ya creaste el repositorio y no te ofreció la plantilla, puedes añadir el archivo <code>.gitignore</code> de <a href="https://github.com/github/gitignore/blob/main/Unity.gitignore" target="_blank" rel="noopener noreferrer">Unity.gitignore</a> antes de continuar. Pulsa <strong>Create repository</strong>.</p></div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-visual">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="step4-title step4-desc">
+              <title id="step4-title">Guardar la primera versión con un commit</title>
+              <desc id="step4-desc">La lista de cambios incluye Assets y ProjectSettings, y el botón Commit to main guarda una versión.</desc>
+              <rect x="28" y="17" width="384" height="176" rx="13" fill="#111713" stroke="#71806f" stroke-width="2"/>
+              <rect x="28" y="17" width="384" height="29" rx="12" fill="#29352d"/><text x="44" y="35" fill="#e2e8de" font-size="10" font-family="sans-serif">Changes · MiJuego</text>
+              <text x="47" y="67" fill="#c9f36a" font-size="9" font-weight="700" font-family="sans-serif">Changes (18)</text>
+              <rect x="46" y="77" width="347" height="26" rx="5" fill="#202c24"/><text x="59" y="94" fill="#dce8da" font-size="9" font-family="sans-serif">▸ Assets / Scenes / SampleScene.unity</text>
+              <rect x="46" y="108" width="347" height="26" rx="5" fill="#202c24"/><text x="59" y="125" fill="#dce8da" font-size="9" font-family="sans-serif">▸ Packages / manifest.json</text>
+              <rect x="46" y="139" width="347" height="26" rx="5" fill="#202c24"/><text x="59" y="156" fill="#dce8da" font-size="9" font-family="sans-serif">▸ ProjectSettings / ProjectVersion.txt</text>
+              <rect x="46" y="171" width="347" height="15" rx="7" fill="#9aca5f"/><text x="219" y="182" fill="#172013" text-anchor="middle" font-size="8" font-weight="700" font-family="sans-serif">Commit to main · Initial Unity project</text>
+            </svg>
+          </div>
+          <div class="step-copy"><div class="step-top"><span class="step-number">04</span><h3>Guarda tu primera versión</h3></div><p>Verás una lista de archivos. Revisa que aparezcan tus carpetas del proyecto y que <strong>no</strong> aparezcan <code>Library</code> ni <code>Temp</code>. Abajo, escribe un resumen sencillo, por ejemplo <code>Primera versión del proyecto</code>, y pulsa <strong>Commit to main</strong>. Un commit es una foto guardada de cómo está tu proyecto en ese momento.</p></div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-visual">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="step5-title step5-desc">
+              <title id="step5-title">Publicar el repositorio en GitHub y elegir su privacidad</title>
+              <desc id="step5-desc">La ventana Publish repository muestra Keep this code private marcado y el botón de publicación.</desc>
+              <rect x="28" y="17" width="384" height="176" rx="13" fill="#111713" stroke="#71806f" stroke-width="2"/>
+              <rect x="28" y="17" width="384" height="29" rx="12" fill="#29352d"/><text x="44" y="35" fill="#e2e8de" font-size="10" font-family="sans-serif">Publish repository</text>
+              <text x="49" y="70" fill="#9eaa9f" font-size="8" font-family="sans-serif">Name</text><rect x="49" y="76" width="342" height="25" rx="5" fill="#202c24" stroke="#536356"/><text x="61" y="93" fill="#e2e8de" font-size="9" font-family="sans-serif">MiJuego</text>
+              <rect x="50" y="114" width="14" height="14" rx="3" fill="#9aca5f"/><path d="M53 121l3 3 6-7" fill="none" stroke="#172013" stroke-width="2"/><text x="72" y="125" fill="#e2e8de" font-size="9" font-family="sans-serif">Keep this code private</text>
+              <text x="72" y="141" fill="#9eaa9f" font-size="8" font-family="sans-serif">Solo tú y las personas que invites podrán verlo.</text>
+              <rect x="220" y="155" width="171" height="25" rx="12" fill="#c9f36a"/><text x="305" y="171" fill="#172013" text-anchor="middle" font-size="9" font-weight="700" font-family="sans-serif">Publish repository</text>
+              <path d="M197 164h-18" stroke="#c9f36a" stroke-width="2"/><path d="M184 159l-6 5 6 5" fill="none" stroke="#c9f36a" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="step-copy"><div class="step-top"><span class="step-number">05</span><h3>Publica en GitHub</h3></div><p>Pulsa <strong>Publish repository</strong>. Comprueba el nombre y deja marcada la opción <strong>Keep this code private</strong> para que el proyecto solo sea visible para ti y las personas que invites. Cuando quieras compartirlo, podrás cambiarlo a público. Pulsa el botón para terminar: tus archivos ya estarán en GitHub.</p></div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-visual">
+            <svg viewBox="0 0 440 210" role="img" aria-labelledby="step6-title step6-desc">
+              <title id="step6-title">Subir cambios futuros con Commit y Push origin</title>
+              <desc id="step6-desc">Después de guardar cambios en Unity, GitHub Desktop muestra Push origin para enviar la nueva versión.</desc>
+              <rect x="28" y="17" width="384" height="176" rx="13" fill="#111713" stroke="#71806f" stroke-width="2"/>
+              <rect x="28" y="17" width="384" height="29" rx="12" fill="#29352d"/><text x="44" y="35" fill="#e2e8de" font-size="10" font-family="sans-serif">GitHub Desktop · MiJuego</text>
+              <rect x="46" y="59" width="112" height="47" rx="8" fill="#26352b"/><text x="102" y="78" fill="#c9f36a" text-anchor="middle" font-size="9" font-weight="700" font-family="sans-serif">1 · Edita</text><text x="102" y="94" fill="#c4d0c3" text-anchor="middle" font-size="8" font-family="sans-serif">Unity</text>
+              <path d="M164 82h36" stroke="#c9f36a" stroke-width="2"/><path d="M195 77l7 5-7 5" fill="none" stroke="#c9f36a" stroke-width="2"/>
+              <rect x="209" y="59" width="91" height="47" rx="8" fill="#26352b"/><text x="254" y="78" fill="#c9f36a" text-anchor="middle" font-size="9" font-weight="700" font-family="sans-serif">2 · Commit</text><text x="254" y="94" fill="#c4d0c3" text-anchor="middle" font-size="8" font-family="sans-serif">Desktop</text>
+              <path d="M306 82h24" stroke="#c9f36a" stroke-width="2"/><path d="M325 77l7 5-7 5" fill="none" stroke="#c9f36a" stroke-width="2"/>
+              <rect x="339" y="59" width="55" height="47" rx="8" fill="#26352b"/><text x="366" y="78" fill="#c9f36a" text-anchor="middle" font-size="8" font-weight="700" font-family="sans-serif">3 · Push</text><text x="366" y="94" fill="#c4d0c3" text-anchor="middle" font-size="7" font-family="sans-serif">GitHub</text>
+              <rect x="46" y="125" width="348" height="42" rx="8" fill="#202c24" stroke="#536356"/><text x="61" y="143" fill="#e2e8de" font-size="9" font-family="sans-serif">Push origin  ↑</text><text x="61" y="158" fill="#9eaa9f" font-size="8" font-family="sans-serif">Sube los commits que todavía no están en GitHub.</text>
+              <circle cx="378" cy="146" r="8" fill="#9aca5f"/><path d="M378 151v-10m-4 4 4-4 4 4" fill="none" stroke="#172013" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="step-copy"><div class="step-top"><span class="step-number">06</span><h3>Sube cada nuevo avance</h3></div><p>Cuando vuelvas a trabajar: abre el proyecto en Unity, haz cambios y guarda. Abre GitHub Desktop, escribe un resumen del cambio y pulsa <strong>Commit to main</strong>. Después pulsa <strong>Push origin</strong> para enviar ese commit a GitHub. Repite estos dos botones cada vez que quieras guardar una nueva versión en la nube.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section alt" id="errores">
+      <div class="shell">
+        <div class="section-heading">
+          <div><div class="kicker">Tranquilo: es normal</div><h2>Si algo no sale,<br>prueba esto.</h2></div>
+          <p class="section-description">Estos son los tropiezos más comunes en la primera subida. No borres carpetas ni cambies ajustes al azar: primero identifica qué está pasando.</p>
+        </div>
+        <div class="callout-grid">
+          <article><h3>Veo cientos de archivos o tarda mucho</h3><p>Comprueba que se esté usando la plantilla Unity y que no aparezcan carpetas como <code>Library</code>, <code>Temp</code> o <code>Obj</code>. Si ya se añadieron al primer commit, detente antes de publicar y corrige el <code>.gitignore</code>.</p></article>
+          <article><h3>El archivo es demasiado grande</h3><p>GitHub bloquea archivos individuales de más de 100 MB. No intentes subir compilaciones o archivos grandes sin revisar. Para archivos de arte muy pesados existe Git LFS, pero puedes empezar excluyendo Builds y otros archivos generados.</p></article>
+          <article><h3>No encuentro «Publish repository»</h3><p>Primero crea un commit: escribe un resumen y pulsa <strong>Commit to main</strong>. Después aparecerá la opción para publicar el repositorio. Revisa también que hayas iniciado sesión en GitHub Desktop.</p></article>
+          <article><h3>¿Privado o público?</h3><p>Si estás aprendiendo o tu juego aún no está listo para compartir, elige privado. Un repositorio público puede ser visto por cualquiera; no subas contraseñas, claves ni datos personales.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" style="padding:68px 0">
+      <div class="final-cta">
+        <div><h2>¡Listo! Tu proyecto ya tiene respaldo.</h2><p>Ahora puedes volver a subir avances cuando quieras y consultar el historial para ver cómo fue cambiando tu juego.</p></div>
+        <a class="button" href="#pasos">Repasar los pasos ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-row shell">
+      <a class="brand" href="#" aria-label="Unity a GitHub, inicio"><span class="brand-mark">U</span><span>UNITY <em>→ GITHUB</em></span></a>
+      <p>Guía educativa independiente. Unity, GitHub y GitHub Desktop son marcas de sus respectivos propietarios. Las ilustraciones son ejemplos didácticos; los nombres de menús pueden variar según la versión.</p>
+    </div>
+  </footer>
+</body>
+</html>
